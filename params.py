@@ -10,3 +10,6 @@ betas = (0.9, 0.999)
 amsgrad = False
 
 classes = {1: "left", 2: "right"}
+
+data_path = ""
+train_test_ratio = 0.3
