@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "test extension",
+  "description": "big balls",
+  "version": "1.0",
+  "icons": {
+    "16": "./images/test16.png",
+    "48": "./images/test48.png",
+    "128": "./images/test128.png"
+  },
+  "action": {
+    "default_popup": "test_extension.html",
+    "default_icon": "./images/test48.png"
+  }
+}
