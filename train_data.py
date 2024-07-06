@@ -1,6 +1,7 @@
-import urllib.request
+import requests
 import io
 from inscriptis import get_text
+from bs4 import BeautifulSoup
 
 # abc articles
 abc = ["https://www.abc.net.au/news/2024-07-06/uk-election-result-leaves-uk-conservative-party-in-tatters/104033260",
@@ -16,17 +17,36 @@ fox = ["https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-st
 "https://www.foxnews.com/politics/missouri-ag-sues-new-york-over-reprehensible-lawfare-against-trump-poisonous-american-democracy",
 "https://www.foxnews.com/politics/capitol-police-investigating-pro-israel-house-democrat-office-vandalized"]
 
+for url in abc:
+    response = requests.get(url)
+    content = response.text
+    soup = BeautifulSoup(content, 'html.parser')
 
-for article in abc:
-    html = urllib.request.urlopen(article).read().decode('utf-8')
-    text = get_text(html)
+    header = soup.find('h1').text
+    paragraphs = soup.find_all('p')
 
-    with io.open('train_data/abc_article' + str(abc.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
-        f_out.write(text)
+    with io.open('train_data/abc_article' + str(abc.index(url)+1) + '.txt', 'w', encoding='utf8') as f_out:
+        f_out.write(header + '\n')
 
-for article in fox:
-    html = urllib.request.urlopen(article).read().decode('utf-8')
-    text = get_text(html)
+        for paragraph in paragraphs:
+            paragraph = paragraph.text
+            f_out.write(paragraph + '\n')
+        
+        f_out.close()
 
-    with io.open('train_data/fox_article' + str(fox.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
-        f_out.write(text)
+for url in fox:
+    response = requests.get(url)
+    content = response.text
+    soup = BeautifulSoup(content, 'html.parser')
+
+    header = soup.find('h1').text
+    paragraphs = soup.find_all('p')
+
+    with io.open('train_data/fox_article' + str(fox.index(url)+1) + '.txt', 'w', encoding='utf8') as f_out:
+        f_out.write(header + '\n')
+
+        for paragraph in paragraphs:
+            paragraph = paragraph.text
+            f_out.write(paragraph + '\n')
+        
+        f_out.close()
