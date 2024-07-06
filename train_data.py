@@ -20,8 +20,6 @@ fox = ["https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-st
 for article in abc:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    #with open(r'train_data/abc_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
-    #   f.write(text)
 
     with io.open('train_data/abc_article' + str(abc.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
         f_out.write(text)
@@ -29,8 +27,6 @@ for article in abc:
 for article in fox:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    #with open(r'train_data/fox_article' + str(fox.index(article)+1) + '.txt', 'x') as f:
-    #    f.write(text)
 
     with io.open('train_data/abc_article' + str(fox.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
         f_out.write(text)
