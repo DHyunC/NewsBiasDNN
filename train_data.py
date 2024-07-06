@@ -28,5 +28,5 @@ for article in fox:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
 
-    with io.open('train_data/abc_article' + str(fox.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
+    with io.open('train_data/fox_article' + str(fox.index(article)+1) + '.txt', 'w', encoding='utf8') as f_out:
         f_out.write(text)
