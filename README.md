@@ -2,5 +2,6 @@
 
 Dependencies 
 - pytorch
-- torch text
+- torch text (temporary)
 - matplotlib.pyplot
+- sklearn
