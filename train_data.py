@@ -9,26 +9,21 @@ abc = ["https://www.abc.net.au/news/2024-07-06/uk-election-result-leaves-uk-cons
 "https://www.abc.net.au/news/2024-07-06/nsw-police-stateline-sexual-assault-saro-convictions/104064490"]
 
 #fox articles
-fox = [
-"https://www.foxnews.com/live-news/biden-campaign-drop-out-july-5",
+fox = ["https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-strategic-white-house-meeting-more-top-headlines",
 "https://www.foxnews.com/politics/biden-faces-most-consequential-weekend-his-presidential-rematch-trump",
 "https://www.foxnews.com/politics/fetterman-emerges-fierce-biden-defender-comparing-post-stroke-debate-biden-blunder",
 "https://www.foxnews.com/politics/missouri-ag-sues-new-york-over-reprehensible-lawfare-against-trump-poisonous-american-democracy",
-"https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-strategic-white-house-meeting-more-top-headlines"
-]
+"https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-strategic-white-house-meeting-more-top-headlines"]
+
 
 for article in abc:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    print("NEW ARTICLE")
-    #print(text)
     with open('abc_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
         f.write(text)
 
 for article in fox:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    print("NEW ARTICLE")
-    #print(text)
     with open('fox_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
         f.write(text)
