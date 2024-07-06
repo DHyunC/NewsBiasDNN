@@ -25,6 +25,8 @@ for file in os.listdir(train_data_path):
 vectorizer = TfidfVectorizer()
 result = vectorizer.fit_transform(corpus)
 
+print(result.shape)
+
 print(result.toarray())
 
 def generate_train_dataloader():
