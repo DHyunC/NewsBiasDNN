@@ -13,17 +13,17 @@ fox = ["https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-st
 "https://www.foxnews.com/politics/biden-faces-most-consequential-weekend-his-presidential-rematch-trump",
 "https://www.foxnews.com/politics/fetterman-emerges-fierce-biden-defender-comparing-post-stroke-debate-biden-blunder",
 "https://www.foxnews.com/politics/missouri-ag-sues-new-york-over-reprehensible-lawfare-against-trump-poisonous-american-democracy",
-"https://www.foxnews.com/us/biden-initiates-debate-damage-control-with-strategic-white-house-meeting-more-top-headlines"]
+"https://www.foxnews.com/politics/capitol-police-investigating-pro-israel-house-democrat-office-vandalized"]
 
 
 for article in abc:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    with open('abc_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
+    with open(r'train_data/abc_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
         f.write(text)
 
 for article in fox:
     html = urllib.request.urlopen(article).read().decode('utf-8')
     text = get_text(html)
-    with open('fox_article' + str(abc.index(article)+1) + '.txt', 'x') as f:
+    with open(r'train_data/fox_article' + str(fox.index(article)+1) + '.txt', 'x') as f:
         f.write(text)
