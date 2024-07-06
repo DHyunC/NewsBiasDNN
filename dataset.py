@@ -8,6 +8,9 @@ from params import *
 from torch.utils.data import DataLoader, random_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
+from torch.utils.data import Dataset
+import torch
+import numpy as np
 
 # compute TF-IDF
 # merge documents into a single corpus
@@ -23,21 +26,49 @@ for file in os.listdir(train_data_path):
             corpus.append(file.read())
 
 vectorizer = TfidfVectorizer()
-result = vectorizer.fit_transform(corpus)
+tfidf_matrix = vectorizer.fit_transform(corpus)
 
-print(result.shape)
+tfidf_tensor = torch.tensor(tfidf_matrix.toarray(), dtype=torch.float32)
 
-print(result.toarray())
+class NewsTextDataset(Dataset):
+    def __init__(self, text, label, tfidf_tensor):
+        self.text = text
+        self.label = label
+        self.tfidf_tensor = tfidf_tensor
+        self.vocab = vectorizer.get_feature_names_out()
 
-def generate_train_dataloader():
-    training_data = corpus
+    def __len__(self):
+        return len(self.text)
+    
+    def __getitem__(self, idx):
+        text = self.text[idx]
+        label = self.label[idx]
+        tfidf_value = self.tfidf_tensor[idx]
+        
+        # Compute document index and offset index
+        document_index = idx
+        offset_index = np.arange(len(text.split()))
+
+        return {
+            'label': torch.tensor(label, dtype=torch.long),
+            'text': text,
+            'document_index': torch.tensor(document_index, dtype=torch.long),
+            'offset_index': torch.tensor(offset_index, dtype=torch.long),
+            'tfidf_value': tfidf_value
+        }
+
+news_dataset = NewsTextDataset(corpus, [1,1,1,1,1,2,2,2,2,2], tfidf_tensor)
+
+training_data, validation_data, testing_data = random_split(news_dataset, [0.7,0.1,0.2]) 
+
+def generate_train_dataloader(): 
     return DataLoader(training_data, batch_size=batch_size, shuffle=False)
 
 def generate_validation_dataloader():
 
-    return DataLoader()
+    return DataLoader(validation_data, batch_size=batch_size, shuffle=False)
 
 def generate_test_dataloader():
 
-    return DataLoader()
+    return DataLoader(testing_data, batch_size=batch_size, shuffle=False)
 
