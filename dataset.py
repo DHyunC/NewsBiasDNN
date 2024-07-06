@@ -17,11 +17,18 @@ import numpy as np
 train_data_path = "./train_data"
 
 corpus = []
+labels = []
 
 for file in os.listdir(train_data_path):
     file_path = os.path.join(train_data_path, file)
 
     if os.path.isfile(file_path):
+        if file[:3] == 'abc':
+            labels.append(1)
+
+        elif file[:3] == 'fox':
+            labels.append(2)
+
         with open(file_path, 'r') as file:
             corpus.append(file.read())
 
@@ -57,7 +64,7 @@ class NewsTextDataset(Dataset):
             'tfidf_value': tfidf_value
         }
 
-news_dataset = NewsTextDataset(corpus, [1,1,1,1,1,2,2,2,2,2], tfidf_tensor)
+news_dataset = NewsTextDataset(corpus, labels, tfidf_tensor)
 
 training_data, validation_data, testing_data = random_split(news_dataset, [0.7,0.1,0.2]) 
 
