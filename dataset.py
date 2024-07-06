@@ -9,18 +9,6 @@ from torch.utils.data import DataLoader, random_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
 
-def generate_train_dataloader():
-
-    return DataLoader()
-
-def generate_validation_dataloader():
-
-    return DataLoader()
-
-def generate_test_dataloader():
-
-    return DataLoader()
-
 # compute TF-IDF
 # merge documents into a single corpus
 train_data_path = "./train_data"
@@ -38,3 +26,16 @@ vectorizer = TfidfVectorizer()
 result = vectorizer.fit_transform(corpus)
 
 print(result.toarray())
+
+def generate_train_dataloader():
+    training_data = corpus
+    return DataLoader(training_data, batch_size=batch_size, shuffle=False)
+
+def generate_validation_dataloader():
+
+    return DataLoader()
+
+def generate_test_dataloader():
+
+    return DataLoader()
+
